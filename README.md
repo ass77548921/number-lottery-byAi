@@ -20,25 +20,62 @@
 ## 技術說明
 
 - **純前端**：HTML5、CSS3、原生 JavaScript，無需後端與資料庫
-- **無額外套件**：未使用任何第三方 JS 函式庫或 CDN
+- **無額外套件**：前端未使用任何第三方 JS 函式庫或 CDN
+- **Node 專案**：內建簡易靜態網站伺服器（僅用 Node 內建模組，無需安裝額外套件）
 - **檔案結構**：
   - `index.html` — 頁面結構
   - `style.css` — 樣式與 RWD、動畫
   - `script.js` — 號碼池邏輯、抽獎與動畫觸發
+  - `server.js` — 靜態檔案伺服器
+  - `package.json` — Node 專案設定
+
+---
+
+## 本地執行
+
+需先安裝 [Node.js](https://nodejs.org/)（建議 18 以上）。
+
+```bash
+# 進入專案目錄
+cd 抽獎ai範例
+
+# 啟動網站（預設 port 3000）
+npm start
+```
+
+瀏覽器開啟 **http://localhost:3000** 即可使用。若要指定 port，可設定環境變數：
+
+```bash
+# Windows (CMD)
+set PORT=8080 && npm start
+
+# Windows (PowerShell)
+$env:PORT=8080; npm start
+
+# macOS / Linux
+PORT=8080 npm start
+```
+
+---
+
+## 簡易部署
+
+本專案僅提供靜態檔案，可部署至任何能跑 Node 的環境：
+
+1. **雲端平台**（如 Render、Railway、Fly.io、Heroku 等）  
+   將專案連線至 Git 後，建置指令留空或 `npm install`，啟動指令設為 `npm start`，並設定 **Port 由平台提供**（多數平台會自動設定 `PORT`）。
+
+2. **自有主機 / VPS**  
+   在伺服器上 clone 專案後執行 `npm start`，並用 Nginx 或 Caddy 做反向代理、或直接對外開指定 port。
+
+3. **僅靜態檔**  
+   若不需要 Node，也可只上傳 `index.html`、`style.css`、`script.js` 至 GitHub Pages、Netlify、Vercel 等靜態託管。
 
 ---
 
 ## 使用方式
 
-1. 用瀏覽器直接開啟 `index.html`，或透過本地伺服器開啟：
-   ```bash
-   # Python 3
-   python -m http.server 8000
-
-   # Node.js（若已安裝 npx）
-   npx serve .
-   ```
-2. 在「最小號碼」「最大號碼」輸入範圍（例如 1 與 100）。
+1. 啟動網站後，在「最小號碼」「最大號碼」輸入範圍（例如 1 與 100）。
 3. 點擊「抽獎」：會先播放滾動動畫，再揭曉一個號碼並顯示煙火。
 4. 重複點擊可繼續抽下一個號碼；抽完後按鈕會顯示「已全部抽完」。
 5. 點擊「重置」可清空結果並依目前範圍重新開始。
