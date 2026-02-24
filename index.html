@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>尾牙號碼抽獎</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-decoration"></div>
+    <div class="container">
+        <header>
+            <div class="header-icon">🎲</div>
+            <h1>尾牙號碼抽獎</h1>
+            <p class="header-subtitle">公平、公正、不重複</p>
+        </header>
+
+        <section class="range-section">
+            <div class="section-title">設定抽獎範圍</div>
+            <div class="range-inputs">
+                <div class="input-wrapper">
+                    <label for="min-number">
+                        <span class="label-text">最小號碼</span>
+                        <input type="number" id="min-number" value="1" min="1">
+                    </label>
+                </div>
+                <div class="range-separator">～</div>
+                <div class="input-wrapper">
+                    <label for="max-number">
+                        <span class="label-text">最大號碼</span>
+                        <input type="number" id="max-number" value="100" min="1">
+                    </label>
+                </div>
+            </div>
+            <div id="pool-info" class="pool-info">號碼池：共 <span id="total-count">100</span> 個號碼</div>
+        </section>
+
+        <section class="current-number-section">
+            <div id="fireworks-overlay" class="fireworks-overlay" aria-hidden="true">
+                <div class="firework-burst firework-burst-1"></div>
+                <div class="firework-burst firework-burst-2"></div>
+                <div class="firework-burst firework-burst-3"></div>
+            </div>
+            <p id="drawing-hint" class="drawing-hint hidden">抽獎中...</p>
+            <div class="current-number-wrapper">
+                <div id="current-number" class="current-number">—</div>
+                <div class="current-number-glow"></div>
+            </div>
+            <p class="current-label">🎯 當前抽到號碼</p>
+        </section>
+
+        <section class="button-section">
+            <button id="draw-btn" class="btn btn-primary">
+                <span class="btn-icon">✨</span>
+                <span class="btn-text">抽獎</span>
+            </button>
+            <button id="reset-btn" class="btn btn-secondary">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text">重置</span>
+            </button>
+        </section>
+
+        <section class="drawn-list-section">
+            <div class="section-header">
+                <h2>📋 已抽出號碼（依序）</h2>
+                <div id="drawn-count" class="drawn-count">已抽出：<span>0</span> 個</div>
+            </div>
+            <div id="drawn-list" class="drawn-list"></div>
+            <p id="empty-message" class="empty-message">
+                <span class="empty-icon">📝</span>
+                尚未抽出任何號碼
+            </p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
