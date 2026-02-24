@@ -4,8 +4,8 @@
   "description": "尾牙號碼抽獎單頁網站",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js 3001",
+    "dev": "node server.js 3001"
   },
   "engines": {
     "node": ">=18"
