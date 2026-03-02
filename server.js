@@ -14,10 +14,19 @@ const MIME = {
   '.json': 'application/json',
 };
 
+const ROOT = path.resolve(__dirname);
+
 const server = http.createServer((req, res) => {
   let url = req.url === '/' ? '/index.html' : req.url;
   url = url.split('?')[0];
-  const filePath = path.join(__dirname, url);
+  const filePath = path.resolve(path.join(ROOT, url));
+
+  // 防止目錄穿越：只允許讀取專案根目錄內的檔案
+  if (!filePath.startsWith(ROOT)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Forbidden');
+    return;
+  }
 
   const ext = path.extname(filePath);
   const contentType = MIME[ext] || 'application/octet-stream';
