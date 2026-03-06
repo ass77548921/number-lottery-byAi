@@ -13,6 +13,7 @@ const emptyMessage = document.getElementById('empty-message');
 const currentNumberSection = document.querySelector('.current-number-section');
 const drawingHint = document.getElementById('drawing-hint');
 const fireworksOverlay = document.getElementById('fireworks-overlay');
+const confettiLayer = document.getElementById('confetti-layer');
 
 // 初始化號碼池
 function initializePool() {
@@ -84,6 +85,7 @@ function drawNumber() {
             currentNumberDisplay.classList.remove('rolling');
             currentNumberDisplay.classList.add('draw-animation');
             triggerFireworks();
+            triggerConfetti();
             setTimeout(() => {
                 currentNumberDisplay.classList.remove('draw-animation');
                 updateDrawnList();
@@ -114,6 +116,60 @@ function triggerFireworks() {
     setTimeout(() => {
         fireworksOverlay.classList.remove('active');
     }, 1200);
+}
+
+function triggerConfetti() {
+    if (!confettiLayer) return;
+    const colors = ['#FFD166', '#EF476F', '#06D6A0', '#118AB2', '#9B5DE5', '#F15BB5', '#FFFFFF'];
+    const pieceCount = 42;
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    // 清空上一輪殘留（保險）
+    confettiLayer.innerHTML = '';
+
+    for (let i = 0; i < pieceCount; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+
+        const w = 7 + Math.random() * 10;
+        const h = 10 + Math.random() * 16;
+        const c = colors[Math.floor(Math.random() * colors.length)];
+
+        // 往外爆開 + 下落
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 120 + Math.random() * 170;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius * 0.55 - (90 + Math.random() * 70);
+        const y2 = y + (240 + Math.random() * 220);
+
+        const r0 = (Math.random() * 360) + 'deg';
+        const r1 = (720 + Math.random() * 720) + 'deg';
+        const r2 = (1080 + Math.random() * 900) + 'deg';
+
+        const t = (900 + Math.random() * 450) + 'ms';
+        const delay = (Math.random() * 90) + 'ms';
+
+        el.style.setProperty('--w', `${w.toFixed(1)}px`);
+        el.style.setProperty('--h', `${h.toFixed(1)}px`);
+        el.style.setProperty('--c', c);
+        el.style.setProperty('--x', `${x.toFixed(1)}px`);
+        el.style.setProperty('--y', `${y.toFixed(1)}px`);
+        el.style.setProperty('--y2', `${y2.toFixed(1)}px`);
+        el.style.setProperty('--r0', r0);
+        el.style.setProperty('--r1', r1);
+        el.style.setProperty('--r2', r2);
+        el.style.setProperty('--t', t);
+        el.style.animationDelay = delay;
+
+        confettiLayer.appendChild(el);
+    }
+
+    // 動畫結束後回收 DOM
+    setTimeout(() => {
+        if (confettiLayer) confettiLayer.innerHTML = '';
+    }, 1600);
 }
 
 // 更新當前號碼顯示（僅用於重置等非動畫情境）
